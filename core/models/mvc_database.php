@@ -34,6 +34,10 @@ class MvcDatabase {
         return esc_sql($string);
     }
     
+    public function remove_placeholder_escape($value) {
+        return $this->wpdb->remove_placeholder_escape($value);
+    }
+    
     public function escape_array($array) {
         foreach ($array as $key => $value) {
             $array[$key] = $this->escape($value);
