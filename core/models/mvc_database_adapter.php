@@ -13,6 +13,10 @@ class MvcDatabaseAdapter {
         return $this->db->escape($value);
     }
     
+    public function remove_placeholder_escape($value) {
+        return $this->db->remove_placeholder_escape($value);
+    }
+    
     public function set_defaults($defaults) {
         $this->defaults = $defaults;
     }
@@ -138,7 +142,8 @@ class MvcDatabaseAdapter {
                 $sql_clauses[] = $this->escape($key).$operator.$value;
             }
             else{
-                $sql_clauses[] = $this->escape($key).$operator.'"'.$this->escape($value).'"';
+                $escaped_value = $this->remove_placeholder_escape($this->escape($value));
+                $sql_clauses[] = $this->escape($key).$operator.'"'.$escaped_value.'"';
             }
         }
         return $sql_clauses;
